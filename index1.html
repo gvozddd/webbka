@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Сайт с рецептами - вкусные и простые блюда для домашней кухни. Популярные рецепты: блины, овощное рагу, шоколадный кекс" />
+  <meta name="keywords" content="рецепты, готовка, кулинария, блюда, cooking, recipes" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph метатеги -->
+  <meta property="og:title" content="Сайт с рецептами - вкусные и простые блюда" />
+  <meta property="og:description" content="Популярные рецепты для домашней кухни: блины, овощное рагу, шоколадный кекс и многое другое" />
+  <meta property="og:type" content="website" />
+  
+  <title>Сайт с рецептами - Главная страница</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #f05a28;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin-bottom: 5px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: opacity 0.3s;
+      cursor: pointer;
+    }
+    nav a:hover, nav a.active {
+      opacity: 0.7;
+      text-decoration: underline;
+    }
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      padding: 5px 15px;
+      border-radius: 4px;
+      border: 1px solid white;
+    }
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      color: #f05a28;
+      margin-bottom: 15px;
+    }
+    .recipe {
+      border: 1px solid #f05a28;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background: #fff3e6;
+      box-shadow: 1px 1px 5px rgba(240,90,40,0.2);
+    }
+    .recipe h3 {
+      margin-bottom: 10px;
+    }
+    .hidden {
+      display: none;
+    }
+    .user-info {
+      margin-top: 10px;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    .breadcrumbs {
+      margin: 10px 0 20px 0;
+      font-size: 0.9em;
+      color: #666;
+    }
+    .breadcrumbs a {
+      color: #f05a28;
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+    .stats {
+      background: #fff3e6;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid #f05a28;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Сайт с рецептами</h1>
+  <nav>
+    <a href="index1.html" class="active">Главная</a>
+    <a href="recipes.html">Рецепты</a>
+    <a href="advice.html">Советы</a>
+    <a href="about.html">О нас</a>
+    <a href="login.html" id="login-link">Войти в аккаунт</a>
+    <a href="#" id="logout-btn" class="logout-btn hidden">Выйти из аккаунта</a>
+  </nav>
+  <div class="user-info" id="user-info"></div>
+</header>
+
+<main>
+  <!-- Breadcrumbs -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <span>Главная</span>
+  </nav>
+
+  <section>
+    <h2>Добро пожаловать на сайт рецептов!</h2>
+    <p>Здесь вы найдете лучшие рецепты для домашней кухни. Присоединяйтесь к нашему сообществу кулинаров!</p>
+    
+    <div class="stats">
+      <h3>Статистика сайта</h3>
+      <p>Более 50 рецептов | 1000+ пользователей | Постоянно обновляется</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Популярные рецепты</h2>
+
+    <article class="recipe">
+      <h3>Блины на молоке</h3>
+      <p><strong>Ингредиенты:</strong> мука, молоко, яйца, сахар, соль, растительное масло.</p>
+      <p><strong>Приготовление:</strong> Смешать все ингредиенты до однородности. Жарить на раскаленной сковороде по 2-3 минуты с каждой стороны.</p>
+    </article>
+    
+    <article class="recipe">
+      <h3>Овощное рагу</h3>
+      <p><strong>Ингредиенты:</strong> кабачки, баклажаны, помидоры, лук, морковь, специи.</p>
+      <p><strong>Приготовление:</strong> Обжарить лук и морковь, добавить остальные овощи и тушить 20 минут.</p>
+    </article>
+    
+    <article class="recipe">
+      <h3>Шоколадный кекс</h3>
+      <p><strong>Ингредиенты:</strong> мука, сахар, яйца, какао, масло, разрыхлитель.</p>
+      <p><strong>Приготовление:</strong> Смешать все ингредиенты. Выпекать 30 минут при 180°С.</p>
+    </article>
+  </section>
+
+  <aside>
+    <h3>Новые возможности</h3>
+    <p>Теперь вы можете добавлять свои рецепты и делиться ими с сообществом!</p>
+  </aside>
+</main>
+
+<footer style="background: #333; color: white; text-align: center; padding: 20px; margin-top: 40px;">
+  <p>&copy; 2025 Сайт с рецептами. Все права защищены.</p>
+  <p><a href="about.html" style="color: #f05a28;">Контакты</a></p>
+</footer>
+
+<!-- Подключение Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBCjDePGZrbLHjx_uRJluj_OVzAkAI6fa0",
+  authDomain: "webproject1-72efb.firebaseapp.com",
+  databaseURL: "https://webproject1-72efb-default-rtdb.firebaseio.com",
+  projectId: "webproject1-72efb",
+  storageBucket: "webproject1-72efb.firebasestorage.app",
+  messagingSenderId: "986351122113",
+  appId: "1:986351122113:web:6aef73d7ba597f6f238640",
+  measurementId: "G-1GKKRLLVV1"
+};
+
+// Инициализация Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Элементы DOM
+const loginLink = document.getElementById('login-link');
+const logoutBtn = document.getElementById('logout-btn');
+const userInfo = document.getElementById('user-info');
+
+function updateUI(user) {
+  if (user) {
+    // Пользователь вошел в систему
+    loginLink.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+    userInfo.textContent = `Вы вошли как: ${user.email}`;
+    userInfo.style.display = 'block';
+  } else {
+    // Пользователь вышел из системы
+    loginLink.classList.remove('hidden');
+    logoutBtn.classList.add('hidden');
+    userInfo.textContent = '';
+    userInfo.style.display = 'none';
+  }
+}
+
+// Обработчик выхода
+logoutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    window.location.replace('login.html');
+  }).catch((error) => {
+    console.error('Ошибка при выходе:', error);
+  });
+});
+
+// Отслеживание состояния аутентификации
+auth.onAuthStateChanged((user) => {
+  updateUI(user);
+});
+</script>
+</body>
+</html>

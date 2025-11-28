@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Добавить рецепт</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #f05a28;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin-bottom: 5px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: opacity 0.3s;
+      cursor: pointer;
+    }
+    nav a:hover, nav a.active {
+      opacity: 0.7;
+      text-decoration: underline;
+    }
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      padding: 5px 15px;
+      border-radius: 4px;
+      border: 1px solid white;
+    }
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .hidden {
+      display: none;
+    }
+    .user-info {
+      margin-top: 10px;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #f05a28;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #f05a28;
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+    }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .back-link, .submit-btn {
+      display: inline-block;
+      margin-top: 20px;
+      color: #f05a28;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 10px 15px;
+      border: 1px solid #f05a28;
+      border-radius: 4px;
+      transition: all 0.3s;
+      background: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .back-link:hover, .submit-btn:hover {
+      background: #f05a28;
+      color: white;
+    }
+    .submit-btn {
+      margin-right: 10px;
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .message {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .form-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Добавить рецепт</h1>
+  <nav>
+    <a href="index1.html">Главная</a>
+    <a href="recipes.html">Рецепты</a>
+    <a href="advice.html">Советы</a>
+    <a href="about.html">О нас</a>
+    <a href="login.html" id="login-link">Войти в аккаунт</a>
+    <a href="#" id="logout-btn" class="logout-btn hidden">Выйти из аккаунта</a>
+  </nav>
+  <div class="user-info" id="user-info"></div>
+</header>
+<main>
+  <section>
+    <div class="form-container">
+      <h2>Новый рецепт</h2>
+      <div id="message"></div>
+      <form id="recipe-form">
+        <div class="form-group">
+          <label for="title">Название рецепта *</label>
+          <input type="text" id="title" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Категория *</label>
+          <select id="category" required>
+            <option value="">Выберите категорию</option>
+            <option value="Выпечка и десерты">Выпечка и десерты</option>
+            <option value="Основные блюда">Основные блюда</option>
+            <option value="Супы">Супы</option>
+            <option value="Завтраки">Завтраки</option>
+            <option value="Салаты">Салаты</option>
+            <option value="Напитки">Напитки</option>
+            <option value="Закуски">Закуски</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ingredients">Ингредиенты *</label>
+          <textarea id="ingredients" placeholder="Перечислите ингредиенты и их количество...
+Например:
+- Мука: 200 г
+- Яйца: 2 шт.
+- Сахар: 2 ст.л." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="instructions">Приготовление *</label>
+          <textarea id="instructions" placeholder="Опишите шаги приготовления...
+Например:
+1. Смешать все сухие ингредиенты
+2. Добавить яйца и молоко
+3. Тщательно перемешать
+4. Выпекать 30 минут при 180°C" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Добавить рецепт</button>
+        <a href="recipes.html" class="back-link">Отмена</a>
+      </form>
+    </div>
+  </section>
+</main>
+<footer style="background: #333; color: white; text-align: center; padding: 20px; margin-top: 40px;">
+  <p>&copy; 2025 Сайт с рецептами. Все права защищены.</p>
+  <p><a href="about.html" style="color: #f05a28;">Контакты</a></p>
+</footer>
+<!-- Подключение Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+<script>
+// Конфигурация Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBCjDePGZrbLHjx_uRJluj_OVzAkAI6fa0",
+  authDomain: "webproject1-72efb.firebaseapp.com",
+  databaseURL: "https://webproject1-72efb-default-rtdb.firebaseio.com",
+  projectId: "webproject1-72efb",
+  storageBucket: "webproject1-72efb.firebasestorage.app",
+  messagingSenderId: "986351122113",
+  appId: "1:986351122113:web:6aef73d7ba597f6f238640",
+  measurementId: "G-1GKKRLLVV1"
+};
+
+// Инициализация Firebase
+try {
+  firebase.initializeApp(firebaseConfig);
+} catch (error) {
+  console.error("Ошибка инициализации Firebase:", error);
+}
+
+const auth = firebase.auth();
+const database = firebase.database();
+
+// Элементы DOM
+const loginLink = document.getElementById('login-link');
+const logoutBtn = document.getElementById('logout-btn');
+const userInfo = document.getElementById('user-info');
+const recipeForm = document.getElementById('recipe-form');
+const messageDiv = document.getElementById('message');
+const submitBtn = document.getElementById('submit-btn');
+
+// Функция для обновления интерфейса в зависимости от состояния аутентификации
+function updateUI(user) {
+  if (user) {
+    // Пользователь вошел в систему
+    loginLink.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+    userInfo.textContent = `Вы вошли как: ${user.email}`;
+    userInfo.style.display = 'block';
+  } else {
+    // Пользователь вышел из системы
+    loginLink.classList.remove('hidden');
+    logoutBtn.classList.add('hidden');
+    userInfo.textContent = '';
+    userInfo.style.display = 'none';
+    // Если пользователь не авторизован, перенаправляем на страницу входа
+    window.location.replace('login.html');
+  }
+}
+
+// Показать сообщение
+function showMessage(text, type) {
+  messageDiv.textContent = text;
+  messageDiv.className = `message ${type}`;
+  setTimeout(() => {
+    messageDiv.textContent = '';
+    messageDiv.className = 'message';
+  }, 5000);
+}
+
+// Обработчик выхода
+logoutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    window.location.replace('login.html');
+  }).catch((error) => {
+    console.error('Ошибка при выходе:', error);
+    showMessage('Ошибка при выходе из системы', 'error');
+  });
+});
+
+// Обработчик отправки формы
+recipeForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const user = auth.currentUser;
+  if (!user) {
+    showMessage('Вы должны быть авторизованы, чтобы добавить рецепт.', 'error');
+    return;
+  }
+  
+  const title = document.getElementById('title').value.trim();
+  const category = document.getElementById('category').value;
+  const ingredients = document.getElementById('ingredients').value.trim();
+  const instructions = document.getElementById('instructions').value.trim();
+  
+  // Валидация формы
+  if (!title || !category || !ingredients || !instructions) {
+    showMessage('Пожалуйста, заполните все обязательные поля.', 'error');
+    return;
+  }
+  
+  // Блокируем кнопку отправки
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Добавление...';
+  
+  try {
+    // Сохраняем рецепт в базе данных
+    const newRecipeRef = database.ref('recipes').push();
+    await newRecipeRef.set({
+      title: title,
+      category: category,
+      ingredients: ingredients,
+      instructions: instructions,
+      author: user.email,
+      createdAt: Date.now(),
+      authorId: user.uid
+    });
+    
+    showMessage('Рецепт успешно добавлен!', 'success');
+    recipeForm.reset();
+    
+    // Через 2 секунды перенаправляем на страницу рецептов
+    setTimeout(() => {
+      window.location.href = 'recipes.html';
+    }, 2000);
+    
+  } catch (error) {
+    console.error('Ошибка при сохранении рецепта:', error);
+    showMessage('Произошла ошибка при сохранении рецепта: ' + error.message, 'error');
+  } finally {
+    // Разблокируем кнопку отправки
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Добавить рецепт';
+  }
+});
+
+// Отслеживание состояния аутентификации
+auth.onAuthStateChanged((user) => {
+  updateUI(user);
+});
+
+// Проверка подключения к Firebase
+database.ref('.info/connected').on('value', (snapshot) => {
+  if (snapshot.val() === true) {
+    console.log('Подключение к Firebase установлено');
+  } else {
+    console.log('Нет подключения к Firebase');
+    showMessage('Нет подключения к базе данных', 'error');
+  }
+});
+</script>
+</body>
+</html>

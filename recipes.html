@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Коллекция рецептов</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #f05a28;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin-bottom: 5px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: opacity 0.3s;
+      cursor: pointer;
+    }
+    nav a:hover, nav a.active {
+      opacity: 0.7;
+      text-decoration: underline;
+    }
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      padding: 5px 15px;
+      border-radius: 4px;
+      border: 1px solid white;
+    }
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .hidden {
+      display: none;
+    }
+    .user-info {
+      margin-top: 10px;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      color: #f05a28;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .recipe {
+      border: 1px solid #f05a28;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background: #fff3e6;
+      box-shadow: 1px 1px 5px rgba(240,90,40,0.2);
+    }
+    .recipe h3 {
+      margin-bottom: 10px;
+      color: #f05a28;
+    }
+    .back-link, .add-recipe-btn {
+      display: inline-block;
+      margin-top: 20px;
+      color: #f05a28;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 10px 15px;
+      border: 1px solid #f05a28;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    .back-link:hover, .add-recipe-btn:hover {
+      background: #f05a28;
+      color: white;
+    }
+    .add-recipe-btn {
+      background: #fff3e6;
+      margin-right: 10px;
+    }
+    .category {
+      background: #f05a28;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin: 20px 0 10px;
+      font-size: 1.2em;
+    }
+    .buttons-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .author {
+      font-style: italic;
+      margin-top: 10px;
+      color: #666;
+      font-size: 0.9em;
+      text-align: right;
+      border-top: 1px dashed #f05a28;
+      padding-top: 5px;
+    }
+    .loading {
+      text-align: center;
+      color: #f05a28;
+      font-style: italic;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Коллекция рецептов</h1>
+  <nav>
+    <a href="index1.html">Главная</a>
+    <a href="recipes.html" class="active">Рецепты</a>
+    <a href="advice.html">Советы</a>
+    <a href="about.html">О нас</a>
+    <a href="login.html" id="login-link">Войти в аккаунт</a>
+    <a href="#" id="logout-btn" class="logout-btn hidden">Выйти из аккаунта</a>
+  </nav>
+  <div class="user-info" id="user-info"></div>
+</header>
+<main>
+  <section>
+    <h2>Наши лучшие рецепты</h2>
+    
+    <div class="buttons-container">
+      <a href="add-recipe.html" class="add-recipe-btn">Добавить рецепт</a>
+    </div>
+    
+    <div id="recipes-container">
+      <!-- Статические рецепты будут заменены динамическими из базы данных -->
+      <div class="loading">Загрузка рецептов...</div>
+    </div>
+    
+    <div class="buttons-container">
+      <a href="add-recipe.html" class="add-recipe-btn">Добавить рецепт</a>
+      <a href="index1.html" class="back-link">Вернуться на главную</a>
+    </div>
+  </section>
+</main>
+<footer style="background: #333; color: white; text-align: center; padding: 20px; margin-top: 40px;">
+  <p>&copy; 2025 Сайт с рецептами. Все права защищены.</p>
+  <p><a href="about.html" style="color: #f05a28;">Контакты</a></p>
+</footer>
+
+<!-- Подключение Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBCjDePGZrbLHjx_uRJluj_OVzAkAI6fa0",
+  authDomain: "webproject1-72efb.firebaseapp.com",
+  databaseURL: "https://webproject1-72efb-default-rtdb.firebaseio.com",
+  projectId: "webproject1-72efb",
+  storageBucket: "webproject1-72efb.firebasestorage.app",
+  messagingSenderId: "986351122113",
+  appId: "1:986351122113:web:6aef73d7ba597f6f238640",
+  measurementId: "G-1GKKRLLVV1"
+};
+
+// Инициализация Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
+
+// Элементы DOM
+const loginLink = document.getElementById('login-link');
+const logoutBtn = document.getElementById('logout-btn');
+const userInfo = document.getElementById('user-info');
+const recipesContainer = document.getElementById('recipes-container');
+
+function updateUI(user) {
+  if (user) {
+    // Пользователь вошел в систему
+    loginLink.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+    userInfo.textContent = `Вы вошли как: ${user.email}`;
+    userInfo.style.display = 'block';
+  } else {
+    // Пользователь вышел из системы
+    loginLink.classList.remove('hidden');
+    logoutBtn.classList.add('hidden');
+    userInfo.textContent = '';
+    userInfo.style.display = 'none';
+  }
+}
+
+// Функция для загрузки и отображения рецептов
+function loadRecipes() {
+  const recipesRef = database.ref('recipes');
+  
+  recipesRef.on('value', (snapshot) => {
+    const recipes = snapshot.val();
+    recipesContainer.innerHTML = '';
+    
+    if (recipes) {
+      // Группируем рецепты по категориям
+      const categories = {};
+      
+      Object.values(recipes).forEach(recipe => {
+        if (!categories[recipe.category]) {
+          categories[recipe.category] = [];
+        }
+        categories[recipe.category].push(recipe);
+      });
+      
+      // Отображаем рецепты по категориям
+      Object.keys(categories).forEach(category => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        categoryDiv.textContent = category;
+        recipesContainer.appendChild(categoryDiv);
+                categories[category].forEach(recipe => {
+          const recipeDiv = document.createElement('div');
+          recipeDiv.className = 'recipe';
+          recipeDiv.innerHTML = `
+            <h3>${recipe.title}</h3>
+            <p><strong>Ингредиенты:</strong> ${recipe.ingredients}</p>
+            <p><strong>Приготовление:</strong> ${recipe.instructions}</p>
+            ${recipe.author ? `<div class="author">Добавлено: ${recipe.author}</div>` : ''}
+          `;
+          recipesContainer.appendChild(recipeDiv);
+        });
+      });
+    } else {
+      // Если рецептов нет, показываем статические рецепты
+      displayStaticRecipes();
+    }
+  }, (error) => {
+    console.error('Ошибка загрузки рецептов:', error);
+    displayStaticRecipes();
+  });
+}
+function displayStaticRecipes() {
+  recipesContainer.innerHTML = `
+    
+  `;
+}
+
+// Обработчик выхода
+logoutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    window.location.replace('login.html');
+  }).catch((error) => {
+    console.error('Ошибка при выходе:', error);
+  });
+});
+auth.onAuthStateChanged((user) => {
+  updateUI(user);
+  loadRecipes();
+});
+</script>
+</body>
+</html>
